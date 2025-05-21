@@ -1,4 +1,10 @@
 import "./styles.css";
-import { greeting } from "./greeting.js";
+// import { greeting } from "./greeting.js";
+// My key is: LA8QLDL4HNR6XYBUT77BTHZLT
 
-console.log(greeting);
+async function getData() {
+    try{
+        const url = 
+        const data = wait fetch();
+    }
+}
