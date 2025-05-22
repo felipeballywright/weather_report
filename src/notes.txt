@@ -2,6 +2,6 @@ Location (city name) X
 Current temperature X
 Weather condition (e.g. clear, rainy) X
 Feels like temperature X
-Humidity 
-Wind speed
+Humidity X
+Wind speed X
 Date/time

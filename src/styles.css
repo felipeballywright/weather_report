@@ -1,3 +1,20 @@
+:root {
+  --bg-color: #000;
+  --text-color: #fff;
+  --card-bg: linear-gradient(135deg, #1e1e1e, #2a2a2a);
+  --highlight: #ffd369;
+  --secondary-text: #aaa;
+  --muted-text: #ccc;
+  --input-bg: #fff;
+  --input-text: #000;
+  --button-bg: #fff;
+  --button-text: #000;
+  --button-hover: #ddd;
+  --shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.5);
+  --border-radius: 1.2rem;
+  --font-family: sans-serif;
+}
+
 *,
 *::before,
 *::after {
@@ -11,11 +28,102 @@ html {
 }
 
 body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
   box-sizing: border-box;
+  font-family: var(--font-family);
   font-size: 1.6rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
 }
 
-body {
-    background-color: black;
-  }
-  
+.title-div h1 {
+  font-size: 3rem;
+  text-align: center;
+}
+
+.form-div form {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-div label {
+  font-size: 1.4rem;
+}
+
+#city-input {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 0.4rem;
+  font-size: 1.6rem;
+  background-color: var(--input-bg);
+  color: var(--input-text);
+}
+
+#search-button {
+  padding: 0.5rem 1rem;
+  border: none;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  font-weight: bold;
+  border-radius: 0.4rem;
+  cursor: pointer;
+}
+
+#search-button:hover {
+  background-color: var(--button-hover);
+}
+
+#render-div {
+  background: var(--card-bg);
+  color: var(--text-color);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  width: 100%;
+  max-width: 400px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  text-align: center;
+}
+
+#weather-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 1.8rem;
+  font-weight: 600;
+  align-items: center;
+}
+
+#weather-header p {
+  color: var(--text-color);
+}
+
+#weather-main-content p:first-child {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--highlight);
+}
+
+#weather-main-content p:nth-child(2) {
+  font-size: 1.8rem;
+  font-style: italic;
+  color: var(--secondary-text);
+  margin-bottom: 1rem;
+}
+
+#weather-main-content p:nth-child(3),
+#weather-main-content p:nth-child(4) {
+  display: inline-block;
+  font-size: 1.4rem;
+  color: var(--muted-text);
+  margin: 0 0.5rem;
+}
