@@ -9,6 +9,7 @@ function searchCity(){
         console.log("Running search city");
         event.preventDefault();
         const city = document.getElementById("city-input").value;
+        document.getElementById("city-input").value = "";
         getData(city);
     })
 }
@@ -22,26 +23,30 @@ async function getData(city) {
         const data = await response.json();
         console.log("The data:", data);
         processData(data);
-    } catch{
+    } catch(error){
         console.error(error);
+        alert("Please input a real city");
     }
 }
 
-async function processData(data) {
+function processData(data) {
     const dataObject = { 
-        city: await data.address,
+        city: data.address,
         date: getTodayDate(),
-        temperature: await data.days[0].temp,
-        minTemperature: await data.days[0].tempmin,
-        maxTemperature: await data.days[0].tempmax,
-        feelsLike: await data.days[0].feelslike,
-        humidity: await data.days[0].humidity,
-        condition: await data.days[0].conditions,
-        description: await data.days[0].description,
-        windSpeed: await data.days[0].windspeed
+        temperature: `${data.days[0].temp}°C`,
+        minTemperature: data.days[0].tempmin,
+        maxTemperature: data.days[0].tempmax,
+        feelsLike: data.days[0].feelslike,
+        humidity: data.days[0].humidity,
+        condition: data.days[0].conditions,
+        description: data.days[0].description,
+        windSpeed: data.days[0].windspeed,
+        icon: data.days[0].icon
     }
     console.log("Process data says:", dataObject);
+    cleanRender();
     renderData(dataObject);
+    changeUI(dataObject);
 }
 
 function renderData(object){
@@ -79,6 +84,16 @@ function renderData(object){
     const maxTemp = document.createElement("p");
     maxTemp.innerText = `Max: ${object.maxTemperature}`;
     content.appendChild(maxTemp);
+
+    const icon = document.createElement("img");
+    icon.src = `https://raw.githubusercontent.com/visualcrossing/WeatherIcons/main/PNG/2nd%20Set%20-%20Color/${object.icon}.png`;
+    content.appendChild(icon);
+}
+
+function cleanRender() {
+    console.log("Running clean render")
+    const renderDiv = document.getElementById("render-div");
+    renderDiv.innerHTML = "";
 }
 
 function getTodayDate(){
@@ -86,6 +101,11 @@ function getTodayDate(){
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     const formattedDate = today.toLocaleDateString('en-US', options);
     return formattedDate;
+}
+
+function changeUI(dataObject){
+    const condition = dataObject.condition.toLowerCase();
+    console.log("change UI says:", condition);
 }
 
 searchCity();

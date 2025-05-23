@@ -1,7 +1,39 @@
-Location (city name) X
-Current temperature X
-Weather condition (e.g. clear, rainy) X
-Feels like temperature X
-Humidity X
-Wind speed X
-Date/time
+the icons that you will need are:
+clear
+partially cloudy
+cloudy
+rain
+thunder rain
+
+LOOK FOR THESE WORDS:
+clear
+cloudy
+rain
+snow
+thunder
+
+clear-day	Clear sky during the day
+clear-night	Clear sky during the night
+
+partly-cloudy-day	Partly cloudy sky during the day
+partly-cloudy-night	Partly cloudy sky during the night
+
+cloudy	Overcast sky
+
+rain	General rainfall
+
+showers-day	Rain showers during the day
+showers-night	Rain showers during the night
+
+snow	Snowfall
+
+snow-showers-day	Snow showers during the day
+snow-showers-night	Snow showers during the night
+
+thunder-rain	Thunderstorms with rain
+thunder-showers-day	Thunderstorms with rain during the day
+thunder-showers-night	Thunderstorms with rain during the night
+
+wind	High wind speeds?
+fog	Low visibility due to fog?
+
