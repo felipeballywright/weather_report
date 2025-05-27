@@ -2,6 +2,8 @@ import "./styles.css";
 // import { greeting } from "./greeting.js";
 // My key is: LA8QLDL4HNR6XYBUT77BTHZLT
 // "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{location}?unitGroup=metric&key={YOUR_API_KEY}&contentType=json"
+// THE GET DATA ERROR RUNS EVEN WHEN THERE IS NO ERROR, PLEASE CORRECT THAT
+
 
 function searchCity(){
     const searchBtn = document.getElementById("search-button");
@@ -14,10 +16,9 @@ function searchCity(){
     })
 }
 
-async function getData(city) {
+async function getData(location) {
     try{
         console.log("Running get data");
-        const location = city;
         const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?unitGroup=metric&key=LA8QLDL4HNR6XYBUT77BTHZLT&contentType=json`;
         const response = await fetch(url, {mode: 'cors'});
         const data = await response.json();
@@ -47,6 +48,7 @@ function processData(data) {
     cleanRender();
     renderData(dataObject);
     changeUI(dataObject);
+    getGifData(icon);
 }
 
 function renderData(object){
@@ -106,6 +108,18 @@ function getTodayDate(){
 function changeUI(dataObject){
     const condition = dataObject.condition.toLowerCase();
     console.log("change UI says:", condition);
+}
+
+async function getGifData(icon) {
+    try{
+        console.log("Running get gif data")
+    } catch(error){
+      console.error(error);
+      const url = `https://api.giphy.com/v1/gifs/search?api_key=YOUR_API_KEY&q=${icon}&limit=5`;
+      const response = await fetch(url, {mode: 'cors'});
+      const data = response.json();
+      console.log("The gif data is", data);
+    }
 }
 
 searchCity();
