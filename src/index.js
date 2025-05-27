@@ -3,12 +3,12 @@ import "./styles.css";
 // My key is: LA8QLDL4HNR6XYBUT77BTHZLT
 // "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{location}?unitGroup=metric&key={YOUR_API_KEY}&contentType=json"
 // THE GET DATA ERROR RUNS EVEN WHEN THERE IS NO ERROR, PLEASE CORRECT THAT
+// The giphy api is: g7fbykBOe2VJKZo4ZUU6Fbt7H8NYEeaS
 
 
 function searchCity(){
     const searchBtn = document.getElementById("search-button");
     searchBtn.addEventListener("click", (event) => {
-        console.log("Running search city");
         event.preventDefault();
         const city = document.getElementById("city-input").value;
         document.getElementById("city-input").value = "";
@@ -18,21 +18,25 @@ function searchCity(){
 
 async function getData(location) {
     try{
-        console.log("Running get data");
         const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?unitGroup=metric&key=LA8QLDL4HNR6XYBUT77BTHZLT&contentType=json`;
         const response = await fetch(url, {mode: 'cors'});
+
+        if(!response.ok){
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
         const data = await response.json();
-        console.log("The data:", data);
+        console.log("Data object", );
         processData(data);
     } catch(error){
         console.error(error);
-        alert("Please input a real city");
+        // alert("There was an error!");
     }
 }
 
 function processData(data) {
     const dataObject = { 
-        city: data.address,
+        city: data.resolvedAddress,
         date: getTodayDate(),
         temperature: `${data.days[0].temp}°C`,
         minTemperature: data.days[0].tempmin,
@@ -44,15 +48,11 @@ function processData(data) {
         windSpeed: data.days[0].windspeed,
         icon: data.days[0].icon
     }
-    console.log("Process data says:", dataObject);
     cleanRender();
     renderData(dataObject);
-    changeUI(dataObject);
-    getGifData(icon);
 }
 
-function renderData(object){
-    console.log("Running render data")
+async function renderData(object){
     const renderDiv = document.getElementById("render-div");
 
     const header = document.createElement("div");
@@ -90,12 +90,23 @@ function renderData(object){
     const icon = document.createElement("img");
     icon.src = `https://raw.githubusercontent.com/visualcrossing/WeatherIcons/main/PNG/2nd%20Set%20-%20Color/${object.icon}.png`;
     content.appendChild(icon);
+
+
+    const gifDiv = document.getElementById("gif-div");
+
+    const gifUrl = await getGifData(object.condition, object.icon);
+
+    const gifImage = document.createElement("img");
+    gifImage.src = gifUrl;
+    console.log("The gif html el is:", gifImage);
+    gifDiv.appendChild(gifImage);
 }
 
 function cleanRender() {
-    console.log("Running clean render")
     const renderDiv = document.getElementById("render-div");
     renderDiv.innerHTML = "";
+    const gifDiv = document.getElementById("gif-div");
+    gifDiv.innerHTML = "";
 }
 
 function getTodayDate(){
@@ -105,20 +116,16 @@ function getTodayDate(){
     return formattedDate;
 }
 
-function changeUI(dataObject){
-    const condition = dataObject.condition.toLowerCase();
-    console.log("change UI says:", condition);
-}
-
-async function getGifData(icon) {
+async function getGifData(condition, icon) {
     try{
-        console.log("Running get gif data")
+      const url = `https://api.giphy.com/v1/gifs/search?api_key=g7fbykBOe2VJKZo4ZUU6Fbt7H8NYEeaS&q=weather-${condition}-${icon}&limit=3&rating=g&lang=en`;
+      const response = await fetch(url, {mode: 'cors'});
+      const gifData = await response.json();
+      const gifUrl = gifData.data[Math.floor(Math.random() * 3)].images.original.url;
+      console.log("Gif Data returns", gifUrl);
+      return gifUrl;
     } catch(error){
       console.error(error);
-      const url = `https://api.giphy.com/v1/gifs/search?api_key=YOUR_API_KEY&q=${icon}&limit=5`;
-      const response = await fetch(url, {mode: 'cors'});
-      const data = response.json();
-      console.log("The gif data is", data);
     }
 }
 
